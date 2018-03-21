@@ -5,13 +5,13 @@ class ProjectsController < ApplicationController
 		json_response(@projects)
 	end
 	def edit
-		
+
 	end
 	def show
-		
+
 	end
 	def update
-		
+
 	end
 	def create
 		puts project_params
@@ -22,9 +22,10 @@ class ProjectsController < ApplicationController
 	private
 
 	def project_params
-		params.permit(:title, :created_by,:status)
+		ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:title, :created_by,:status] )
+		# params.permit(:title, :created_by,:status)
 	end
-	
+
 	def set_project
 		@project = Project.find(params[:id])
 	end

@@ -5,13 +5,14 @@ class ProjectsController < ApplicationController
 		json_response(@projects)
 	end
 	def edit
-		# sms_message = "Surprise! Dear #{user_name}, we know you love bus trips, RailYatri has upgraded you to the VIP zone, you now get Rs. 300 off on bus tickets! Use code: VIP http://m.rytr.in/home-page"
+		
 	end
 	def show
-
+		json_response(@project)
 	end
 	def update
-
+		@project.update_attributes(project_params)
+		json_response(@project)
 	end
 	def create
 		@project = Project.new(project_params)
@@ -19,7 +20,9 @@ class ProjectsController < ApplicationController
 		json_response(@project) 
 	end
 	def destroy
-
+   @project.destroy
+   # @projects = Project.all
+	 json_response(@project)
 	end
 	private
 

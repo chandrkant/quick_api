@@ -1,11 +1,12 @@
 class ProjectsController < ApplicationController
 	before_action :set_project, only: [:show, :update, :destroy]
 	def index
-		@projects = Project.all
+		# @projects = Project.all
+		@projects = current_user.projects
 		json_response(@projects)
 	end
 	def edit
-		
+
 	end
 	def show
 		json_response(@project)
@@ -16,8 +17,9 @@ class ProjectsController < ApplicationController
 	end
 	def create
 		@project = Project.new(project_params)
+		@project.user = current_user
 		@project.save
-		json_response(@project) 
+		json_response(@project)
 	end
 	def destroy
    @project.destroy

@@ -10,29 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327055235) do
+ActiveRecord::Schema.define(version: 20180401165223) do
 
-  create_table "projects", force: :cascade do |t|
-    t.string   "title"
-    t.string   "created_by"
-    t.boolean  "status"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_projects_on_user_id"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "pgcrypto"
+  enable_extension "uuid-ossp"
+
+  create_table "comments", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.text     "content"
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
   end
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "projects", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name"
-    t.string   "created_by"
+    t.text     "desc"
     t.boolean  "status"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.index ["user_id"], name: "index_projects_on_user_id", using: :btree
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "tasks", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.boolean  "status"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid     "project_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id", using: :btree
+  end
+
+  create_table "user_tasks", id: false, force: :cascade do |t|
+    t.uuid     "user_id"
+    t.uuid     "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_user_tasks_on_task_id", using: :btree
+    t.index ["user_id"], name: "index_user_tasks_on_user_id", using: :btree
+  end
+
+  create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "user_name",              default: "", null: false
     t.string   "email",                  default: "", null: false
     t.string   "last_name",              default: "", null: false
@@ -56,8 +80,8 @@ ActiveRecord::Schema.define(version: 20180327055235) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "authentication_token"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
 end

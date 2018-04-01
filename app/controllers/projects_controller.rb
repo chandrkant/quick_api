@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
 
 	def project_params
 		# ActiveModelSerializers::Deserialization.jsonapi_parse!(params, only: [:title, :created_by,:status] )
-		params.require(:project).permit(:title, :created_by,:status)
+		params.require(:project).permit(:name, :desc,:status)
 	end
 
 	def set_project

@@ -1,3 +1,3 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id,:title,:created_by,:status
+  attributes :id,:name,:desc,:status
 end

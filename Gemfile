@@ -9,7 +9,8 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.6'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -47,6 +48,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # gem "active_model_serializers", "~> 0.10.2"
 gem 'devise'
+gem 'devise_uid'                                  # Security
 gem 'rack-attack'
 # grape API
 gem 'grape'
@@ -54,6 +56,15 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'grape-active_model_serializers'
 gem 'grape_on_rails_routes'
 gem 'grape-swagger'
-
+gem 'uuidtools'                                   # Allows the use of uuid as primary keys
 # Paging
 gem 'kaminari'
+# Guard Extensions
+gem 'guard-brakeman', '~> 0.8.1'                # vuln checker
+gem 'guard-bundler', '~> 1.0.0'                 # Gem list changes checker
+gem 'guard-cane', '~> 0.1.2'                    # code quality checker
+gem 'guard-consistency_fail', '~> 0.0.8'        # db consistency checker
+gem 'guard-minitest', '~> 1.3.1'                # unit test checker
+gem 'guard-rails', '~> 0.4.7'                   # file change -> event
+gem 'guard-rails_best_practices', '~> 0.1.3'    # best practices checker
+gem 'guard-shell'                               # Run external command when code changes.

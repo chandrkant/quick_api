@@ -1,0 +1,3 @@
+--abc-max 10
+--no-doc
+--style-exclude spec/**/*

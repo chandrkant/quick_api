@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
  	before_save :ensure_authentication_token
   has_many :projects
-  has_many :tasks
+  has_many :user_tasks
+  has_many :tasks, through: :user_tasks
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token

@@ -1,8 +1,8 @@
 class CreateProjects < ActiveRecord::Migration[5.0]
   def change
-    create_table :projects do |t|
-      t.string :title
-      t.string :created_by
+    create_table :projects, id: :uuid do |t|
+      t.string :name
+      t.text  :desc
       t.boolean :status
       t.references :user
 
